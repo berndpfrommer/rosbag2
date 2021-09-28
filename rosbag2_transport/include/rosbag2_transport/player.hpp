@@ -38,6 +38,7 @@
 #include "rosbag2_interfaces/srv/play_next.hpp"
 #include "rosbag2_interfaces/srv/resume.hpp"
 #include "rosbag2_interfaces/srv/set_rate.hpp"
+#include "rosbag2_interfaces/srv/seek.hpp"
 #include "rosbag2_interfaces/srv/toggle_paused.hpp"
 #include "rosbag2_storage/serialized_bag_message.hpp"
 #include "rosbag2_storage/storage_options.hpp"
@@ -173,6 +174,8 @@ private:
     const std::string & op_name);
   void add_keyboard_callbacks();
 
+  void create_control_services();
+
   rosbag2_storage::StorageOptions storage_options_;
   rosbag2_transport::PlayOptions play_options_;
   moodycamel::ReaderWriterQueue<rosbag2_storage::SerializedBagMessageSharedPtr> message_queue_;
@@ -184,13 +187,17 @@ private:
   bool skip_message_in_main_play_loop_ RCPPUTILS_TSA_GUARDED_BY
     (skip_message_in_main_play_loop_mutex_) = false;
 
+  // Control services
   rclcpp::Service<rosbag2_interfaces::srv::Pause>::SharedPtr srv_pause_;
   rclcpp::Service<rosbag2_interfaces::srv::Resume>::SharedPtr srv_resume_;
   rclcpp::Service<rosbag2_interfaces::srv::TogglePaused>::SharedPtr srv_toggle_paused_;
   rclcpp::Service<rosbag2_interfaces::srv::IsPaused>::SharedPtr srv_is_paused_;
+
   rclcpp::Service<rosbag2_interfaces::srv::GetRate>::SharedPtr srv_get_rate_;
   rclcpp::Service<rosbag2_interfaces::srv::SetRate>::SharedPtr srv_set_rate_;
+
   rclcpp::Service<rosbag2_interfaces::srv::PlayNext>::SharedPtr srv_play_next_;
+  rclcpp::Service<rosbag2_interfaces::srv::Seek>::SharedPtr srv_seek_;
 
   // defaults
   std::shared_ptr<KeyboardHandler> keyboard_handler_;
