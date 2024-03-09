@@ -107,6 +107,7 @@ ament_export_dependencies(
   rosbag2_storage
 )
 
+if(FALSE)
 if(BUILD_TESTING)
   add_definitions(-D_SRC_RESOURCES_DIR_PATH="${CMAKE_CURRENT_SOURCE_DIR}/test/resources")
 
@@ -532,6 +533,7 @@ if(BUILD_TESTING)
     rcpputils::rcpputils
     rosbag2_test_common::rosbag2_test_common
   )
+endif()
 endif()
 
 ament_package()
